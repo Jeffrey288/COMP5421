@@ -1,0 +1,19 @@
+lecture notes
+# *.zip
+# *.npz
+# *.npy
+# *.tgz
+# *.mat
+hw5/data
+hw3/data
+# hw4/data
+hw1/data
+hw1/temp
+**/jhk.zip
+
+hw5/python/q6_SVD.npz
+hw5/scripts/17flowers.tgz
+
+# hw0/data
+# data
+# *.synctex.gz

@@ -1,0 +1,219 @@
+% docx2tex 1.8 --- ``Who let the docx out?'' 
+% 
+% docx2tex is Open Source and  
+% you can download it on GitHub: 
+% https://github.com/transpect/docx2tex 
+%  
+\documentclass{scrbook} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx}
+\usepackage{hyperref} 
+\usepackage{multirow} 
+\usepackage{tabularx} 
+\usepackage{color} 
+\usepackage{textcomp} 
+\usepackage{tipa}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsfonts} 
+\usepackage{amsxtra} 
+\usepackage{wasysym} 
+\usepackage{isomath} 
+\usepackage{mathtools} 
+\usepackage{txfonts} 
+\usepackage{upgreek} 
+\usepackage{enumerate} 
+\usepackage{tensor} 
+\usepackage{pifont} 
+\usepackage{ulem} 
+\usepackage{xfrac} 
+\usepackage{arydshln} 
+\usepackage[english]{babel}
+
+\begin{document}
+\textbf{TODO:}
+
+\textbf{Rerun q13 and q14 because rectW and rectH is changed}
+
+Change q14 to display also the old estimation
+\begin{equation*}
+\mathcal{W}\left(x;p\right)=x+p
+\end{equation*}
+Hence,
+\begin{equation*}
+\frac{\partial \mathcal{W}(x;p)}{\partial p^{T}}=\frac{\partial }{\partial p^{T}}\left(x+p\right)=I_{2\times 2}
+\end{equation*}
+where $I_{2\times 2}$ is the identity matrix.
+\begin{equation*}
+\begin{array}{ll}
+\multicolumn{2}{l}{\arg \min _{\Updelta p} \sum _{x}{\left| \left| \mathcal{I}_{t+1}\left(x+p+\Updelta p\right)-\mathcal{I}_{t}\left(x\right)\right| \right| }_{2}^{2}}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \mathcal{I}_{t+1}\left(x'\right)+\frac{\partial \mathcal{I}_{t+1}\left(x'\right)}{\partial x'^{T}}\Updelta p-\mathcal{I}_{t}\left(x\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \frac{\partial \mathcal{I}_{t+1}\left(x'\right)}{\partial x'^{T}}\Updelta p-\left(\mathcal{I}_{t}\left(x\right)-\mathcal{I}_{t+1}\left(x'\right)\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} {\left| \left| A\Updelta p-b\right| \right| }_{2}^{2}
+\end{array}
+\end{equation*}
+where $A=\left[\begin{array}{c}
+\frac{\partial \mathcal{I}_{t+1}\left({x}_{1}^{'}\right)}{\partial {x}_{1}^{'}^{T}}\\
+\frac{\partial \mathcal{I}_{t+1}\left({x}_{2}^{'}\right)}{\partial {x}_{2}^{'}^{T}}\\
+\vdots \\
+\frac{\partial \mathcal{I}_{t+1}\left({x}_{N}^{'}\right)}{\partial {x}_{N}^{'}^{T}}
+\end{array}\right]$ and $b=\left[\begin{array}{c}
+\mathcal{I}_{t}\left(x_{1}\right)-\mathcal{I}_{t+1}\left({x}_{1}^{'}\right)\\
+\mathcal{I}_{t}\left(x_{2}\right)-\mathcal{I}_{t+1}\left({x}_{2}^{'}\right)\\
+\vdots \\
+\mathcal{I}_{t}\left(x_{N}\right)-\mathcal{I}_{t+1}\left({x}_{N}^{'}\right)
+\end{array}\right]$. Note that $A\in \mathbb{R}^{N\times 2}$, $\Updelta p\in \mathbb{R}^{2}$ and $b\in \mathbb{R}^{N}$.
+
+For a unique solution of $\Updelta p$ to be found, $A^{T}A$ should be non-singular.
+
+Appearance Basis 
+\begin{equation*}
+\begin{array}{rl}
+\mathcal{I}_{t+1}\left(x\right) & =\mathcal{I}_{t}\left(x\right)+{\sum }_{k=1}^{K}w_{k}\mathcal{B}_{k}(x)\\
+\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right) & ={\sum }_{k=1}^{K}w_{k}\mathcal{B}_{k}(x)
+\end{array}
+\end{equation*}
+Since the basis for $B_{k}$ are orthogonal to each other, $\mathcal{B}_{i}\left(x\right)\cdot \mathcal{B}_{k}\left(x\right)=0$ if $i\neq k$. Therefore, to find $w_{i}$ for some $i$, we dot both sides with $\mathcal{B}_{i}(x)$:
+\begin{equation*}
+\begin{array}{rl}
+\mathcal{B}_{i}\left(x\right)\cdot \left(\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right)\right) & =\mathcal{B}_{i}\left(x\right)\cdot {\sum }_{k=1}^{K}w_{k}\mathcal{B}_{k}(x)\\ & =w_{i}\left(\mathcal{B}_{i}\left(x\right)\cdot \mathcal{B}_{i}\left(x\right)\right)\\
+w_{i} & =\frac{\mathcal{B}_{i}\left(x\right)\cdot \left(\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right)\right)}{\mathcal{B}_{i}\left(x\right)\cdot \mathcal{B}_{i}\left(x\right)}
+\end{array}
+\end{equation*}
+Hence, $w=\left[\begin{array}{cccc}
+\frac{\mathcal{B}_{1}\left(x\right)\cdot \left(\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right)\right)}{\mathcal{B}_{1}\left(x\right)\cdot \mathcal{B}_{1}\left(x\right)} & \frac{\mathcal{B}_{2}\left(x\right)\cdot \left(\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right)\right)}{\mathcal{B}_{2}\left(x\right)\cdot \mathcal{B}_{2}\left(x\right)} & \ldots & \frac{\mathcal{B}_{K}\left(x\right)\cdot \left(\mathcal{I}_{t+1}\left(x\right)-\mathcal{I}_{t}\left(x\right)\right)}{\mathcal{B}_{K}\left(x\right)\cdot \mathcal{B}_{K}\left(x\right)}
+\end{array}\right]^{T}$.
+
+We consider the new image as $\mathcal{I}_{t+1}\left(x+p\right)$. If ${\left\{\mathcal{B}_{k}\right\}}_{k=1}^{K}$ is an orthonormal basis, then $\mathcal{B}_{k}(x)\cdot \mathcal{B}_{k}(x)=1$. $w$ reduces to
+\begin{equation*}
+\begin{array}{}
+w & =\left[\begin{array}{llll}
+\mathcal{B}_{1}\left(x\right) & \mathcal{B}_{2}\left(x\right) & \ldots & \mathcal{B}_{K}\left(x\right)
+\end{array}\right]^{T}\left(\mathcal{I}_{t+1}\left(x+p\right)-\mathcal{I}_{t}\left(x\right)\right)\\ & =\left[\begin{array}{llll}
+\mathcal{B}_{1}\left(x\right) & \mathcal{B}_{2}\left(x\right) & \ldots & \mathcal{B}_{K}\left(x\right)
+\end{array}\right]^{T}\left(A\Updelta p-b\right)
+\end{array}
+\end{equation*}
+We let $B=\left[\begin{array}{cccc}
+\mathcal{B}_{1}\left(x\right) & \mathcal{B}_{2}\left(x\right) & \ldots & \mathcal{B}_{K}\left(x\right)
+\end{array}\right]\in \mathbb{R}^{N\times K}$. If we let $z=A\Updelta p-b$, then it becomes clear that
+\begin{equation*}
+\sum _{x}{\left| \left| \mathcal{I}_{t+1}\left(x+p\right)-\mathcal{I}_{t}\left(x\right)-{\sum }_{k=1}^{K}w_{k}\mathcal{B}_{k}\left(x\right)\right| \right| }_{2}^{2}={\left| \left| z-Bw\right| \right| }_{2}^{2}={\left| \left| z-\underset{\begin{array}{c}
+\text{projection}\\
+\text{matrix}
+\end{array}}{\underbrace{BB^{T}} }z\right| \right| }_{2}^{2}
+\end{equation*}
+Note by orthogonal decomposition, $z=proj_{B}\left(z\right)+proj_{{B^{\bot }}}\left(z\right)=BB^{T}z+B^{\bot }z$. Note that $z\in \mathbb{R}^{N}$ and $B^{\bot }\in \mathbb{R}^{N\times N}$. We can rewrite $z-BB^{T}z$ in terms of $\Updelta p$:
+\begin{equation*}
+\begin{array}{rl}
+z-BB^{T}z & =A\Updelta p-b-BB^{T}\left(A\Updelta p-b\right)\\ & =\left(A-BB^{T}A\right)\Updelta p-(b-BB^{T}b)\\ & =\left(I-BB^{T}\right)A\Updelta p-\left(I-BB^{T}\right)b
+\end{array}
+\end{equation*}
+This is the form we will pass into np.linalg.lstsq. We also see that $z-BB^{T}z=\left(I-BB^{T}\right)z$, so $B^{\bot }=I-BB^{T}$.
+\begin{equation*}
+\mathcal{W}\left(x;p\right)=\left[\begin{array}{cc}
+1+p_{1} & p_{2}\\
+p_{4} & 1+p_{5}
+\end{array}\right]\left[\begin{array}{c}
+x\\
+y
+\end{array}\right]+\left[\begin{array}{c}
+p_{3}\\
+p_{6}
+\end{array}\right]=\left[\begin{array}{c}
+\left(1+p_{1}\right)x+p_{2}y+p_{3}\\
+p_{4}x+\left(1+p_{5}\right)y+p_{6}
+\end{array}\right]
+\end{equation*}
+Hence,
+\begin{align*}
+\frac{\partial \mathcal{W}\left(x;p\right)}{\partial p^{T}}=\begin{bmatrix}
+x & y & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & x & y & 1
+\end{bmatrix}
+\end{align*}
+and
+\begin{equation*}
+\begin{array}{}
+\multicolumn{2}{l}{\arg \min _{\Updelta p} \sum _{x}{\left| \left| \mathcal{I}_{t+1}\left(\mathcal{W}(x;p+\Updelta p)\right)-\mathcal{I}_{t}\left(x\right)\right| \right| }_{2}^{2}}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \mathcal{I}_{t+1}\left(x'\right)+\frac{\partial \mathcal{I}_{t+1}\left(x'\right)}{\partial x'^{T}}\frac{\partial \mathcal{W}\left(x;p\right)}{\partial p^{T}}\Updelta p-\mathcal{I}_{t}\left(x\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \frac{\partial \mathcal{I}_{t+1}\left(x'\right)}{\partial x'^{T}}\begin{bmatrix}
+x_{x} & x_{y} & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & x_{x} & x_{y} & 1
+\end{bmatrix}\Updelta p-\left(\mathcal{I}_{t}\left(x\right)-\mathcal{I}_{t+1}\left(x'\right)\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \left[\begin{array}{ll}
+\left(\mathcal{I}_{t+1}\right)_{x}(x') & \left(\mathcal{I}_{t+1}\right)_{y}(x')
+\end{array}\right]\begin{bmatrix}
+x_{x} & x_{y} & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & x_{x} & x_{y} & 1
+\end{bmatrix}\Updelta p-\left(\mathcal{I}_{t}\left(x\right)-\mathcal{I}_{t+1}\left(x'\right)\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} \sum _{x}{\left| \left| \mathrm{D}\Updelta p-\left(\mathcal{I}_{t}\left(x\right)-\mathcal{I}_{t+1}\left(x'\right)\right)\right| \right| }_{2}^{2}\\ & =\arg \min _{\Updelta p} {\left| \left| A\Updelta p-b\right| \right| }_{2}^{2}
+\end{array}
+\end{equation*}
+where $D=\left[\begin{array}{cccccc}
+\left(\mathcal{I}_{t+1}\right)_{x}\left(x'\right)x_{x} & \left(\mathcal{I}_{t+1}\right)_{x}\left(x'\right)x_{y} & \left(\mathcal{I}_{t+1}\right)_{x}\left(x'\right) & \left(\mathcal{I}_{t+1}\right)_{y}\left(x'\right)x_{x} & \left(\mathcal{I}_{t+1}\right)_{y}\left(x'\right)x_{y} & \left(\mathcal{I}_{t+1}\right)_{y}\left(x'\right)
+\end{array}\right]$. Now $A\in \mathbb{R}^{N\times 6}$.
+
+Affine Additive
+
+Note that in this question, the final affine transformation matrix will follow the conventions of $x$ being the horizontal axis and $y$ being the vertical axis, instead of the system used in scipy.ndimage.transform where $x$ and $y$ are the first and second axis of the image array.
+
+\begin{align*}
+\left[\begin{array}{ccc}
+1+p_{1} & p_{2} & p_{3}\\
+p_{4} & 1+p_{5} & p_{6}
+\end{array}\right] \\
+\left[\begin{array}{ccc}
+1+p_{5} & p_{4} & p_{6}\\
+p_{1} & 1+p_{2} & p_{3}
+\end{array}\right] 
+\end{align*}
+
+\pagebreak
+Inverse Compositional
+
+Our new objective function:
+
+\begin{align*}
+\mathcal{I}_{t}\left(\mathcal{W}\left(x;0+\Updelta p\right)\right)\approx \mathcal{I}_{t}\left(\mathcal{W}\left(x;0\right)\right)+\frac{\partial \mathcal{I}_{t}\left(x\right)}{\partial x^{T}}\frac{\partial \mathcal{W}}{\partial p^{T}}\Updelta p \\
+{\left| \left| \mathcal{I}_{t+1}\left(\mathcal{W}\left(x;p\right)\right)-\mathcal{I}_{t}\left(\mathcal{W}\left(x;\Updelta p\right)\right)\right| \right| }_{2}^{2} \\
+\begin{array}{}
+\multicolumn{2}{l}{={\left| \left| \mathcal{I}_{t}\left(\mathcal{W}\left(x;\Updelta p\right)\right)-\mathcal{I}_{t+1}\left(\mathcal{W}\left(x;p\right)\right)\right| \right| }_{2}^{2}}\\
+\multicolumn{2}{l}{=\sum _{x}{\left| \left| \mathcal{I}_{t}\left(\mathcal{W}\left(x;0\right)\right)+\frac{\partial \mathcal{I}_{t}\left(x\right)}{\partial x^{T}}\frac{\partial \mathcal{W}}{\partial p^{T}}\Updelta p-\mathcal{I}_{t+1}\left(\mathcal{W}\left(x;p\right)\right)\right| \right| }_{2}^{2}}\\
+\multicolumn{2}{l}{=\sum _{x}{\left| \left| \frac{\partial \mathcal{I}_{t}\left(x\right)}{\partial x^{T}}\begin{bmatrix}
+x_{x} & x_{y} & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & x_{x} & x_{y} & 1
+\end{bmatrix}\Updelta p-\left(\mathcal{I}_{t+1}\left(\mathcal{W}\left(x;p\right)\right)-\mathcal{I}_{t}\left(\mathcal{W}\left(x;0\right)\right)\right)\right| \right| }_{2}^{2}}\\ & ={\left| \left| A'\Updelta p-b'\right| \right| }_{2}^{2}
+\end{array} 
+\end{align*}
+
+and our update rule is $\mathcal{W}\left(x;p\right)\leftarrow \mathcal{W}\left(x;p\right)\circ \mathcal{W}\left(x;\Updelta p\right)^{-1}$. 
+
+This approach is computationally more efficient since the pseudoinverse of the $A'=\left(\frac{\partial \mathcal{I}_{t}\left(x_{i}\right)}{\partial {x}_{i}^{T}}\frac{\partial \mathcal{W}}{\partial p^{T}}\right)_{i}$ term in the inverse compositional method can be precomputed, while the $A=\left(\frac{\partial \mathcal{I}_{t+1}\left(x_{i}'\right)}{\partial {x}_{i}^{'T}}\frac{\partial \mathcal{W}}{\partial p^{T}}\right)_{i}$ in the classical approach has to be recalculated every time the $x'=x+p$ is updated in each iteration. Calculating inverse takes a lot of time, especially when the $A$s contains around 75k rows.
+
+To truly utilize the efficient of precomputation, instead of selecting points common to both images’ valid area, we assume that the motion between two images are minimal and we only select points from a smaller rectangle. Both versions of the affine matrix alignment are written in SubtractDominantMotion.py. Uncomment the code to run each version. 
+
+\pagebreak
+It should be emphasized that the motivation for correlation filters is to find a filter $g$, the provides us with the desired response $y$, from a series of discriminators $x$ extracted from some part of the image.
+
+\begin{align*}
+\arg \min _{g} {\sum }_{n=1}^{N}\frac{1}{2}{\left| \left| y_{n}-{x}_{n}^{T}g\right| \right| }_{2}^{2} \\
+\arg \min _{g} \frac{1}{2}{\left| \left| y-X^{T}g\right| \right| }_{2}^{2}+\frac{\lambda }{2}{\left| \left| g\right| \right| }_{2}^{2} 
+\end{align*}
+
+Differentiate the objective function with respective to $g$ to find the minimum:
+\begin{equation*}
+\begin{array}{ll}
+\multicolumn{2}{l}{\frac{\partial }{\partial g}\left(\frac{1}{2}{\left| \left| y-X^{T}g\right| \right| }_{2}^{2}+\frac{\lambda }{2}{\left| \left| g\right| \right| }_{2}^{2}\right)}\\ & =-X\left(y-X^{T}g\right)+\lambda g\\ & =\left(XX^{T}+\lambda I\right)g-Xy\\ & =\left(S+\lambda I\right)g-Xy
+\end{array}
+\end{equation*}
+The minimum is attained when the gradient is zero:
+\begin{equation*}
+g=\left(S+\lambda I\right)^{-1}Xy
+\end{equation*}
+\includegraphics[width=1\textwidth]{writeup_equations.docx.tmp/word/media/image1.png}\includegraphics[width=1\textwidth]{writeup_equations.docx.tmp/word/media/image2.png}
+
+The performance we’re trying to asses is how well the correlation filter is generated. Viewing the code, the desired response is $\exp (-{\left| \left| dp\right| \right| }_{2}^{2}/5)$, where ${\left| \left| dp\right| \right| }_{2}^{2}=dx^{2}+dy^{2}$ is the distance away from the center of Lena’s eye; the less the distance, the stronger the response. This means that we want to fit a filter which gives a clear, strong response for an eye. Comparing the responses generated by the two correlation filters with different regularization, we find that $\lambda =1$ gives a strong response for the eye they we didn’t use for fitting $g$, while we only see random noise for $\lambda =0$.
+
+The reason for this is $\lambda =1$ gives more regularization than $\lambda =0$, limiting $g$ from straying away from the origin (which gives the default response; the response to any image patch would evaluate to 0) and effectively preventing $g$ from overfitting to specifically the left eye. In other terms, $\lambda =1$ provides a trust region while $\lambda =0$ doesn’t.
+
+The response is different because convolution flips the filter horizontally and vertically before element-wise multiplication with the cropped image window, but correlation applies the given filter directly. To get a similar response, flip the filter before passing it into scipy.ndimage.convolve, like filter{[}::-1,::-1{]}. This means that the following two statements should give the same results:
+
+\texttt{scipy.ndimage.correlate(img, filter)}
+
+\texttt{scipy.ndimage.convolve(img, filter{[}::-1,::-1{]})}
+\end{document}

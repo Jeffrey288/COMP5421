@@ -1,0 +1,362 @@
+% docx2tex 1.8 --- ``Who let the docx out?'' 
+% 
+% docx2tex is Open Source and  
+% you can download it on GitHub: 
+% https://github.com/transpect/docx2tex 
+%  
+\documentclass{scrbook} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx}
+\usepackage{hyperref} 
+\usepackage{multirow} 
+\usepackage{tabularx} 
+\usepackage{color} 
+\usepackage{textcomp} 
+\usepackage{tipa}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsfonts} 
+\usepackage{amsxtra} 
+\usepackage{wasysym} 
+\usepackage{isomath} 
+\usepackage{mathtools} 
+\usepackage{txfonts} 
+\usepackage{upgreek} 
+\usepackage{enumerate} 
+\usepackage{tensor} 
+\usepackage{pifont} 
+\usepackage{ulem} 
+\usepackage{xfrac} 
+\usepackage{soul}
+\usepackage{arydshln} 
+\usepackage[english]{babel}
+
+\begin{document}
+\chapter{Homework 4}
+
+Hartanto Kwee Jeffrey (20851871)
+
+jhk@connect.ust.hk
+
+\textbf{What exactly is a Rodrigues vector?}
+
+\textbf{Conventions}
+
+We will define the fundamental matrix as 
+\begin{equation*}
+x^{'T}Fx=x^{'T}K^{'-T}\left(R\left[t_{\times }\right]\right)K^{-1}x=0
+\end{equation*}
+where 
+\begin{equation*}
+x'=R(x-t)
+\end{equation*}
+and the epipolar lines are $l'=Fx$ nd $l=F^{T}x'$ respectively.
+
+\textbf{Our convention}: If we define $x'=R(x-t)$, then
+
+\begin{align*}
+x'&=R\left(x-t\right) \\
+R^{T}x'&=x-t \\
+t\times R^{T}x'&=x\times t-t\times t \\
+\left[t_{\times }\right]R^{T}x'&=x\times t \\
+x^{T}\left[t_{\times }\right]R^{T}x'&=x^{T}\left(x\times t\right)=0 \\
+\left(x^{T}\left[t_{\times }\right]R^{T}x'\right)^{T}&=0 \\
+x^{'T}R\left[t_{\times }\right]x&=0 
+\end{align*}
+
+\textbf{Alternative conventions}: defining $x'=Rx+t$ would give
+
+\begin{align*}
+x'&=Rx+t \\
+t\times x'&=t\times Rx+t\times t \\
+x^{'T}\left(t\times x'\right)&=x^{'T}\left[t_{\times }\right]Rx \\
+x^{'T}\left[t_{\times }\right]Rx&=0 
+\end{align*}
+
+Hence, we should be extra cautious about the definition.
+
+\section{Part 1}
+
+\subsection{Q1.1}
+
+The epipolar constraint suggests that
+\begin{equation*}
+x^{'T}Fx=0
+\end{equation*}
+Since $x'=\left[\begin{array}{ccc}
+0 & 0 & 1
+\end{array}\right]^{T}$ and $x=\left[\begin{array}{ccc}
+0 & 0 & 1
+\end{array}\right]^{T}$ satisfy this equation, we have
+\begin{equation*}
+\left[\begin{array}{ccc}
+0 & 0 & 1
+\end{array}\right]\begin{bmatrix}
+F_{11} & F_{12} & F_{13}\\
+F_{21} & F_{22} & F_{23}\\
+F_{31} & F_{32} & F_{33}
+\end{bmatrix}\left[\begin{array}{c}
+0\\
+0\\
+1
+\end{array}\right]=0\Longrightarrow F_{33}=0
+\end{equation*}
+\subsection{Q1.2}
+
+Note that $E=R\left[t_{\times }\right]$ is the essential matrix. With a pure translation in the x-axis, we have $R=I_{3\times 3}$, $t=\left[\begin{array}{ccc}
+t_{x} & 0 & 0
+\end{array}\right]^{T}$ and $t_{\times }=\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & -t_{x}\\
+0 & t_{x} & 0
+\end{array}\right]$. Hence $E=[t_{\times }]$, and the epipolar line for the first camera is
+\begin{equation*}
+l=Ex'=\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & -t_{x}\\
+0 & t_{x} & 0
+\end{array}\right]\left[\begin{array}{c}
+u'\\
+v'\\
+1
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+-t_{x}\\
+t_{x}v'
+\end{array}\right]
+\end{equation*}
+is a horizontal line since any point $x$ on it satisfies $l^{T}x=0$, and since $l^{T}x=\left[\begin{array}{ccc}
+0 & -t_{x} & t_{x}u'
+\end{array}\right]\left[\begin{array}{c}
+u\\
+v\\
+1
+\end{array}\right]$, we have 
+\begin{equation*}
+v=v'
+\end{equation*}
+which is the equation of a horizontal line, i.e. parallel to the $x$-axis. Similar calculations show that $l'=E^{T}x$ is also a horizontal line.
+
+\subsection{Q1.3}
+
+Suppose the next timestamp following $i$ is $j$. The relationship between camera and world coordinates in both frames are $X_{ci}=R_{i}X_{W}+t_{i}$ and $X_{cj}=R_{j}X_{W}+t_{j}$. We invert the latter to get $X_{W}={R}_{j}^{-1}(X_{cj}-t_{j})$, which we substitute into the former to get
+\begin{equation*}
+X_{ci}=R_{i}{R}_{j}^{-1}\left(X_{cj}-t_{j}\right)+t_{i}=R_{i}{R}_{j}^{-1}X_{cj}+\left(t_{i}-R_{i}{R}_{j}^{-1}t_{j}\right)
+\end{equation*}
+Inverting gives
+\begin{equation*}
+X_{cj}=R_{j}{R}_{i}^{-1}\left[X_{ci}-\left(t_{i}-R_{i}{R}_{j}^{-1}t_{j}\right)\right]
+\end{equation*}
+Remember that our convention is
+\begin{equation*}
+X_{cj}=R_{rel}\left(X_{ci}-t_{rel}\right)
+\end{equation*}
+Hence, $R_{rel}=R_{j}{R}_{i}^{-1}$ and $t_{rel}=t_{i}-R_{i}{R}_{j}^{-1}t_{j}$, and the fundamental matrix is
+\begin{equation*}
+F=K^{-T}R_{rel}\left[t_{rel\times }\right]K^{-1}
+\end{equation*}
+\subsection{Q1.4}
+
+Denote $p_{r}$ and $p_{i}$ to be the real and imaginary image of the object as viewed by our camera. Set the world coordinate system at the mirror plane. Then, the world coordinates of the objects can be let as $w_{r}=a+b$ and $w_{i}=a-b$, where $a$ is a vector lying on the mirror plane, and $b$ is a vector perpendicular to the mirror plane. Note that $a$ is variable and $b$ is constant as the object is ``flat''. If the camera is offset by rotation $R$ and translation $t$, then the camera coordinates of the objects are $c_{r}=R\left(a+b\right)+t=Ra+(t+Rb)$ and $c_{i}=R\left(a-b\right)+t=Ra+(t-Rb)$ and the image coordinates are $p_{r}=Kc_{r}$ and $p_{i}=Kc_{i}$. Hence, this set up can also be viewed as having two cameras with the same rotation matrix $R$ and intrinsic matrix $K$ but different translations $t_{r}=t+Rb$ and $t_{i}=t-Rb$ viewing the same object. Applying this to the result of Q1.3, we have $R_{rel}=RR^{-1}=I$ and $t_{rel}=t+Rb-\left(t-Rb\right)=2Rb$. The fundamental matrix of this setup is
+\begin{equation*}
+F=K^{-T}R_{rel}\left[t_{rel\times }\right]K^{-1}=K^{-T}\left[t_{rel\times }\right]K^{-1}
+\end{equation*}
+Noting that $\left[t_{\times }\right]=\left[\begin{array}{ccc}
+0 & -t_{z} & t_{y}\\
+t_{z} & 0 & -t_{x}\\
+-t_{y} & t_{x} & 0
+\end{array}\right]$ is skew symmetric since $\left[t_{\times }\right]^{T}=-\left[t_{\times }\right]$, we see that 
+\begin{equation*}
+F^{T}=\left(K^{-T}\left[t_{rel\times }\right]K^{-1}\right)^{T}=K^{-T}\left[t_{rel\times }\right]^{T}K^{-1}=-K^{-T}\left[t_{rel\times }\right]K^{-1}=-F
+\end{equation*}
+Hence, the fundamental matrix is skew-symmetric.
+
+\section{Part II}
+
+\subsection{Q2.1}
+
+Carefully following our conventions, $F$ is given by
+\begin{equation*}
+x'Fx=0
+\end{equation*}
+In this case, $x'=x2$ and $x=x1$. Referring to the lecture notes, our system is given by
+
+\centering{}\texttt{\includegraphics[width=1\textwidth]{writeup.docx.tmp/word/media/image1.png}}
+
+\centering{}{[}{[}-8.33149234e-09  1.29538462e-07 -1.17187851e-03{]}
+
+\centering{}{[} 6.51358336e-08  5.70670059e-09 -4.13435037e-05{]}
+
+\centering{}{[} 1.13078765e-03  1.91823637e-05  4.16862079e-03{]}{]}
+
+\subsection{Q3.1}
+
+By our conventions,
+\begin{equation*}
+F={K}_{2}^{-T}E{K}_{1}^{-1}
+\end{equation*}
+Hence
+\begin{equation*}
+E={K}_{2}^{T}FK_{1}
+\end{equation*}
+\subsection{Q3.2}
+
+Note: we omit the index $i$ in the following derivation.
+
+The relationship between the camera matrix $C_{1}$, 3D object point $P$ and 2D image point $\widetilde{x_{1}}$ is
+\begin{equation*}
+\lambda _{1}\widetilde{x_{1}}=C_{1}P
+\end{equation*}
+Then, we have
+\begin{equation*}
+\lambda _{1}\left[\begin{array}{c}
+u_{1}\\
+v_{1}\\
+1
+\end{array}\right]=\left[\begin{array}{c}
+-{C}_{11}^{T}-\\
+-{C}_{12}^{T}-\\
+-{C}_{13}^{T}-
+\end{array}\right]P
+\end{equation*}
+where $C_{1i}$ is a column vector containing the elements of the $i$th row of $C_{1}$. We obtain three linear equations from this
+
+\begin{align*}
+\lambda _{1}u_{1}&={C}_{11}^{T}P \\
+\lambda _{1}v_{1}&={C}_{12}^{T}P \\
+\lambda _{1}&={C}_{13}^{T}P 
+\end{align*}
+
+Substituting the third equality into the first two, we have
+
+\begin{align*}
+{C}_{11}^{T}P-{C}_{13}^{T}Pu_{1}&=0 \\
+{C}_{12}^{T}P-{C}_{13}^{T}Pv_{1}&=0 
+\end{align*}
+
+In matrix form,
+\begin{equation*}
+\left[\begin{array}{c}
+{C}_{11}^{T}-u_{1}{C}_{13}^{T}\\
+{C}_{12}^{T}-v_{1}{C}_{13}^{T}
+\end{array}\right]P=0
+\end{equation*}
+We can get a similar matrix from the second camera:
+\begin{equation*}
+\left[\begin{array}{c}
+{C}_{21}^{T}-u_{2}{C}_{23}^{T}\\
+{C}_{22}^{T}-v_{2}{C}_{23}^{T}
+\end{array}\right]P=0
+\end{equation*}
+Therefore, the homogenous system we want to find is
+\begin{equation*}
+A=\left[\begin{array}{c}
+{C}_{11}^{T}-u_{1}{C}_{13}^{T}\\
+{C}_{12}^{T}-v_{1}{C}_{13}^{T}\\
+{C}_{21}^{T}-u_{2}{C}_{23}^{T}\\
+{C}_{22}^{T}-v_{2}{C}_{23}^{T}
+\end{array}\right]
+\end{equation*}
+\pagebreak
+How are babies made, you ask:
+
+{[}{[} 0.03519757  0.03519757 -0.07009456 -0.07009456{]}
+
+ {[} 0.96623389  0.96623389  0.99394507  0.99394507{]}
+
+ {[}-0.25525126 -0.25525126  0.08461648  0.08461648{]}{]}
+
+{[}{[} 0.03519757  0.03519757 -0.07009456 -0.07009456{]}
+
+ {[} 0.96623389  0.96623389  0.99394507  0.99394507{]}
+
+ {[}-0.25525126 -0.25525126  0.08461648  0.08461648{]}{]}
+
+Recall that $F=K^{'-T}EK^{-1}$, where $E=R\left[t_{\times }\right]$ is the essential matrix. With a pure translation in the x-axis, we have $R=I_{3\times 3}$, $t=\left[\begin{array}{ccc}
+t_{x} & 0 & 0
+\end{array}\right]^{T}$ and $t_{\times }=\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & -t_{x}\\
+0 & t_{x} & 0
+\end{array}\right]$. Note that the intrinsic matrices are affine, and their inverses are also affine. The fundamental matrix will take the form:
+
+\begin{align*}
+F&=K^{'-T}R\left[t_{\times }\right]K^{-1}=\begin{bmatrix}
+{K}_{1}^{'} & {K}_{4}^{'} & 0\\
+{K}_{2}^{'} & {K}_{5}^{'} & 0\\
+{K}_{3}^{'} & {K}_{6}^{'} & 1
+\end{bmatrix}I\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & -t_{x}\\
+0 & t_{x} & 0
+\end{array}\right]\begin{bmatrix}
+K_{1} & K_{2} & K_{3}\\
+K_{4} & K_{5} & K_{6}\\
+0 & 0 & 1
+\end{bmatrix} \\
+&=\begin{bmatrix}
+{K}_{1}^{'} & {K}_{4}^{'} & 0\\
+{K}_{2}^{'} & {K}_{5}^{'} & 0\\
+{K}_{3}^{'} & {K}_{6}^{'} & 1
+\end{bmatrix}\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & -t_{x}\\
+K_{4}t_{x} & K_{5}t_{x} & K_{6}t_{x}
+\end{array}\right] \\
+&=\left[\begin{array}{ccc}
+0 & 0 & -K_{4}'t_{x}\\
+0 & 0 & -K_{5}'t_{x}\\
+K_{4}t_{x} & K_{5}t_{x} & K_{6}t_{x}-{K}_{6}^{'}t_{x}
+\end{array}\right] 
+\end{align*}
+
+Epipolar lines are given by $l'=Fx$ and $l=F^{T}x'$. Hence,
+\begin{equation*}
+l'=Fx=\left[\begin{array}{ccc}
+0 & 0 & -K_{4}'t_{x}\\
+0 & 0 & -K_{5}'t_{x}\\
+K_{4}t_{x} & K_{5}t_{x} & K_{6}t_{x}-{K}_{6}^{'}t_{x}
+\end{array}\right]\left[\begin{array}{c}
+x\\
+y\\
+1
+\end{array}\right]=
+\end{equation*}
+5.2
+
+The Rodrigues vector $r$ represents a rotation using the axis-angle representation:
+\begin{equation*}
+r=\hat{r}\tan (\theta /2)
+\end{equation*}
+where $\hat{r}$ is a unit vector for the rotation, and $\theta $ is the angle of rotation. We strongly emphasize here that this is different from the axis-angle representation where $\theta =\left| \left| r\right| \right| $. A rotation is uniquely represented by the direction (up/down) of the rotation vector $\hat{r}$ and the angle $\alpha $ which can take up values within $(0,\pi )$. These properties account for the full $2\pi $ rotation around a rotation vector. The zero-rotation can be uniquely represented by $\hat{r}=\left[0,0,0\right]$. However, note that rotations at an angle $\pi $ are not defined, and we represent all rotations at $\pi $ with the infinity vector in our implementation.
+
+References which specifically mention the term ``Rodrigues’ vector'':
+\begin{itemize}
+\item \url{https://www.ctcms.nist.gov/~langer/oof2man/RegisteredClass-Rodrigues.html}
+\item \url{https://www.researchgate.net/publication/231052227_Rotations_with_Rodrigues'_vector}
+\end{itemize}
+The original definition of the Rodrigues’ vector comes from Rodrigues’ own publications in French, so we will mainly refer to the second reference above for our implementation.
+
+A rotational matrix $R$ can be written as
+\begin{equation*}
+R=I+\left[\hat{r}_{\times }\right]\sin \theta +\left[\hat{r}_{\times }\right]^{2}\left(1-\cos \theta \right)
+\end{equation*}
+where $\left[\hat{r}_{\times }\right]=\left[\begin{array}{ccc}
+0 & -\hat{r}_{z} & \hat{r}_{y}\\
+\hat{r}_{z} & 0 & -\hat{r}_{x}\\
+-\hat{r}_{y} & \hat{r}_{x} & 0
+\end{array}\right]$.
+
+To obtain $R$ from $r$, simply normalize $r$, find $\theta =2\arctan \left| \left| r\right| \right| $ and construct $R$ from the given formula.
+
+To obtain $r$ from $R$, we refer to the following four references: 
+
+\url{https://handwiki.org/wiki/Rodrigues\%27_rotation_formula}
+
+\url{https://en.wikipedia.org/wiki/Rotation_matrix}
+
+\url{https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.110.5134}
+
+\url{https://courses.cs.duke.edu/fall13/compsci527/notes/rodrigues.pdf}
+\end{document}

@@ -1,0 +1,230 @@
+% docx2tex 1.8 --- ``Who let the docx out?'' 
+% 
+% docx2tex is Open Source and  
+% you can download it on GitHub: 
+% https://github.com/transpect/docx2tex 
+%  
+\documentclass{scrbook} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx}
+\usepackage{hyperref} 
+\usepackage{multirow} 
+\usepackage{tabularx} 
+\usepackage{color} 
+\usepackage{textcomp} 
+\usepackage{tipa}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsfonts} 
+\usepackage{amsxtra} 
+\usepackage{wasysym} 
+\usepackage{isomath} 
+\usepackage{mathtools} 
+\usepackage{txfonts} 
+\usepackage{upgreek} 
+\usepackage{enumerate} 
+\usepackage{tensor} 
+\usepackage{pifont} 
+\usepackage{ulem} 
+\usepackage{xfrac} 
+\usepackage{soul}
+\usepackage{arydshln} 
+\usepackage[english]{babel}
+
+\begin{document}
+\includegraphics[width=1\textwidth]{MLP\%20Derivation.docx.tmp/word/media/image1.png}
+
+Define ${a}_{i}^{\left(0\right)}=x_{i}$ and ${a}_{k}^{\left(2\right)}=\hat{y}_{k}$.
+
+\textbf{Forward Feeding}
+
+\begin{align*}
+{z}_{j}^{\left(1\right)}&={\sum }_{i=1}^{m_{0}}{w}_{ij}^{\left(1\right)}x_{i}+{b}_{j}^{\left(1\right)}, {a}_{j}^{\left(1\right)}=f\left({z}_{j}^{\left(1\right)}\right) \\
+{z}_{k}^{\left(2\right)}&={\sum }_{j=0}^{m_{1}}{w}_{jk}^{\left(2\right)}{z}_{j}^{\left(1\right)}+{b}_{k}^{\left(2\right)}, \hat{y}_{k}=f\left({z}_{k}^{\left(2\right)}\right) 
+\end{align*}
+
+where we adopt the sigmoid function
+\begin{equation*}
+f\left(x\right)=\frac{1}{1+e^{-x}}
+\end{equation*}
+\textbf{Back Propagation}
+
+We use an improper gradient notation
+\begin{equation*}
+\nabla _{{w}_{ij}^{\left(l\right)}}L=\frac{\partial L}{\partial {w}_{ij}^{l}}
+\end{equation*}
+MSE Loss Function:
+\begin{equation*}
+L=\frac{1}{2}{\sum }_{k=1}^{m_{2}}\left(\hat{y}_{k}-y_{k}\right)^{2}
+\end{equation*}
+For output layer (layer 2),
+
+\begin{align*}
+\delta _{k}&=\left(\hat{y}_{k}-y_{k}\right)\hat{y}_{k}\left(1-\hat{y}_{k}\right) \\
+{w}_{jk}^{\left(2\right)}\leftarrow {w}_{jk}^{\left(2\right)}-\eta \left[\nabla _{{w}_{jk}^{\left(2\right)}}L\right], \nabla _{{w}_{jk}^{\left(2\right)}}L&=\delta _{k}{a}_{j}^{\left(1\right)} \\
+{b}_{k}^{\left(2\right)}\leftarrow {b}_{k}^{\left(2\right)}-\eta \left[\nabla _{{b}_{k}^{\left(2\right)}}L\right], \nabla _{{b}_{k}^{\left(2\right)}}L&=\delta _{k} 
+\end{align*}
+
+For hidden layer (layer 1),
+
+\begin{align*}
+\delta _{j}&={a}_{j}^{\left(1\right)}\left(1-{a}_{j}^{\left(1\right)}\right){\sum }_{i=1}^{m_{2}}\delta _{k}{w}_{jk}^{\left(2\right)} \\
+{w}_{ij}^{\left(1\right)}\leftarrow {w}_{ij}^{\left(1\right)}-\eta \left[\nabla _{{w}_{ij}^{\left(1\right)}}L\right], \nabla _{{w}_{ij}^{\left(1\right)}}L&=\delta _{j}x_{i} \\
+{b}_{j}^{\left(1\right)}\leftarrow {b}_{j}^{\left(1\right)}-\eta \left[\nabla _{{b}_{j}^{\left(1\right)}}L\right], \nabla _{{b}_{j}^{\left(1\right)}}L&=\delta _{j} 
+\end{align*}
+
+\pagebreak
+\textbf{Derivation}
+
+\textit{\includegraphics[width=1\textwidth]{MLP\%20Derivation.docx.tmp/word/media/image2.png}}
+
+\textit{\includegraphics[width=1\textwidth]{MLP\%20Derivation.docx.tmp/word/media/image3.png}}
+
+\pagebreak
+\textit{Q1.5}
+
+\url{https://www.cs.cmu.edu/~aarti/Class/10315_Spring22/315S22_Rec4.pdf}
+
+\begin{align*}
+y&=x^{T}W+b \\
+y_{j}&={\sum }_{i=1}^{d}x_{i}W_{ij}+b_{j} 
+\end{align*}
+
+$J$ \textit{is a function of} $y_{j}$ \textit{(}$j=1,2,\ldots ,k$\textit{)}
+
+\begin{align*}
+\frac{\partial J}{\partial W_{ij}}&={\sum }_{j'=1}^{k}\frac{\partial J}{\partial y_{j'}}\frac{\partial y_{j'}}{\partial W_{ij}}=\delta _{j}\frac{\partial }{\partial W_{ij}}\left({\sum }_{i=1}^{d}x_{i}W_{ij}+b_{j}\right)=\delta _{j}x_{i} \\
+\frac{\partial J}{\partial x_{i}}&={\sum }_{j=1}^{k}\frac{\partial J}{\partial y_{j}}\frac{\partial y_{j}}{\partial x_{i}}={\sum }_{j=1}^{k}\delta _{j}\frac{\partial }{\partial x_{i}}\left({\sum }_{i=1}^{d}x_{i}W_{ij}+b_{j}\right)={\sum }_{j=1}^{k}\delta _{j}W_{ij} \\
+\frac{\partial J}{\partial b_{j}}&={\sum }_{j'=1}^{k}\frac{\partial J}{\partial y_{j'}}\frac{\partial y_{j'}}{\partial b_{j}}=\delta _{j}\left(1\right)=\delta _{j} 
+\end{align*}
+
+\textit{In matrix form, (Denominator-layout notation)}
+
+\begin{align*}
+\frac{\partial J}{\partial W}&=\begin{bmatrix}
+\frac{\partial J}{\partial W_{11}} & \frac{\partial J}{\partial W_{12}} & \ldots & \frac{\partial J}{\partial W_{1k}}\\
+\frac{\partial J}{\partial W_{21}} & \frac{\partial J}{\partial W_{22}} & \ldots & \frac{\partial J}{\partial W_{2k}}\\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial J}{\partial W_{d1}} & \frac{\partial J}{\partial W_{d2}} & \ldots & \frac{\partial J}{\partial W_{dk}}
+\end{bmatrix}=\left[\begin{array}{cccc}
+\delta _{1}x_{1} & \delta _{2}x_{1} & \ldots & \delta _{k}x_{1}\\
+\delta _{1}x_{2} & \delta _{2}x_{2} & \ldots & \delta _{k}x_{2}\\
+\vdots & \vdots & \ddots & \vdots \\
+\delta _{1}x_{d} & \delta _{2}x_{d} & \ldots & \delta _{k}x_{d}
+\end{array}\right]=x\delta ^{T} \\
+\frac{\partial J}{\partial x}&=W\delta  \\
+\frac{\partial J}{\partial b}&=\delta  
+\end{align*}
+
+\textit{Q2.3}
+
+\begin{align*}
+a^{\left(t\right)}&=W^{\left(t\right)}h^{\left(t-1\right)}+b^{\left(t\right)} \\
+h^{\left(t\right)}&=g\left(a^{\left(t\right)}\right), h^{\left(T\right)}=o\left(a^{\left(T\right)}\right) 
+\end{align*}
+
+Derivative of cross-entropy(softmax(x)):
+\begin{equation*}
+\frac{\partial J}{\partial {a}_{i}^{\left(T\right)}}={h}_{i}^{\left(T\right)}-y_{i}\Longrightarrow \frac{\partial J}{\partial a^{\left(T\right)}}=h^{\left(T\right)}-y
+\end{equation*}
+Derivatives for output layer:
+
+Dimensions: $W^{\left(t\right)}\in \mathbb{R}^{{n^{\left(t-1\right)}}\times {n^{\left(t\right)}}}; h^{\left(t\right)},a^{\left(t\right)}, b^{\left(T\right)}\in \mathbb{R}^{{n^{\left(t\right)}}\times 1}$.
+
+\begin{align*}
+\frac{\partial J}{\partial {W}_{ij}^{\left(T\right)}}&={\sum }_{j'=1}^{n^{\left(T\right)}}\frac{\partial J}{\partial {a}_{j'}^{\left(T\right)}}\frac{\partial {a}_{j'}^{\left(T\right)}}{\partial {W}_{ij}^{\left(T\right)}}=\frac{\partial J}{\partial {a}_{j}^{\left(T\right)}}\frac{\partial {a}_{j}^{\left(T\right)}}{\partial {W}_{ij}^{\left(T\right)}}=\left[{h}_{j}^{\left(T\right)}-y_{j}\right]{h}_{i}^{\left(T-1\right)}\Longrightarrow \frac{\partial J}{\partial W^{\left(T\right)}}=h^{\left(T-1\right)}\left[h^{\left(T\right)}-y\right]^{T} \\
+\frac{\partial J}{\partial {b}_{j}^{\left(T\right)}}&={\sum }_{j'=1}^{n^{\left(T\right)}}\frac{\partial J}{\partial {a}_{j'}^{\left(T\right)}}\frac{\partial {a}_{j'}^{\left(T\right)}}{\partial {b}_{j}^{\left(T\right)}}=\frac{\partial J}{\partial {a}_{j}^{\left(T\right)}}\frac{\partial {a}_{j}^{\left(T\right)}}{\partial {b}_{j}^{\left(T\right)}}=\left[{h}_{j}^{\left(T\right)}-y_{j}\right]\Longrightarrow \frac{\partial J}{\partial b^{\left(T\right)}}=h^{\left(T\right)}-y \\
+\frac{\partial J}{\partial {h}_{i}^{\left(T-1\right)}}&={\sum }_{j'=1}^{n^{\left(T\right)}}\frac{\partial J}{\partial {a}_{j'}^{\left(T\right)}}\frac{\partial {a}_{j'}^{\left(T\right)}}{\partial {h}_{i}^{\left(T-1\right)}}={\sum }_{j'=1}^{n^{\left(T\right)}}\left[h^{\left(T\right)}-y\right]_{j'}\frac{\partial {a}_{j'}^{\left(T\right)}}{\partial {h}_{i}^{\left(T-1\right)}}={\sum }_{j'=1}^{n^{\left(T\right)}}\left[h^{\left(T\right)}-y\right]_{j'}{W}_{ij'}^{\left(T\right)}\Longrightarrow \frac{\partial J}{\partial h^{\left(T-1\right)}}=W^{\left(T\right)}\left[h^{\left(T\right)}-y\right] 
+\end{align*}
+
+Derivatives for hidden layers:
+
+\begin{align*}
+\frac{\partial J}{\partial {W}_{ij}^{\left(T-1\right)}}&={\sum }_{j'=1}^{n^{\left(T-1\right)}}\frac{\partial J}{\partial {h}_{j'}^{\left(T-1\right)}}\frac{\partial {h}_{j'}^{\left(T-1\right)}}{\partial {a}_{j'}^{\left(T-1\right)}}\frac{\partial {a}_{j'}^{\left(T-1\right)}}{\partial {W}_{ij}^{\left(T-1\right)}}=\frac{\partial J}{\partial {h}_{j}^{\left(T-1\right)}}g'\left({a}_{j}^{\left(T-1\right)}\right){h}_{i}^{\left(T-2\right)}\Longrightarrow \frac{\partial J}{\partial W^{\left(T-1\right)}}=h^{\left(T-2\right)}\left[\frac{\partial J}{\partial h^{\left(T-1\right)}}\odot g'\left(a^{\left(T-1\right)}\right)\right]^{T} \\
+\frac{\partial J}{\partial {b}_{j}^{\left(T-1\right)}}&={\sum }_{j'=1}^{n^{\left(T-1\right)}}\frac{\partial J}{\partial {h}_{j'}^{\left(T-1\right)}}\frac{\partial {h}_{j'}^{\left(T-1\right)}}{\partial {a}_{j'}^{\left(T-1\right)}}\frac{\partial {a}_{j'}^{\left(T-1\right)}}{\partial {b}_{j}^{\left(T-1\right)}}=\frac{\partial J}{\partial {h}_{j}^{\left(T-1\right)}}g'\left({a}_{j}^{\left(T-1\right)}\right)\Longrightarrow \frac{\partial J}{\partial b^{\left(T-1\right)}}=\frac{\partial J}{\partial h^{\left(T-1\right)}}\odot g'\left(a^{\left(T-1\right)}\right) \\
+\frac{\partial J}{\partial {h}_{i}^{\left(T-2\right)}}&={\sum }_{j'=1}^{n^{\left(T-1\right)}}\frac{\partial J}{\partial {h}_{j'}^{\left(T-1\right)}}\frac{\partial {h}_{j'}^{\left(T-1\right)}}{\partial {a}_{j'}^{\left(T-1\right)}}\frac{\partial {a}_{j'}^{\left(T-1\right)}}{\partial {h}_{i}^{\left(T-2\right)}}={\sum }_{j'=1}^{n^{\left(T-1\right)}}\frac{\partial J}{\partial {h}_{j'}^{\left(T-1\right)}}g'\left({a}_{j'}^{\left(T-1\right)}\right){W}_{ij'}^{\left(T-1\right)}\Longrightarrow \frac{\partial J}{\partial h^{\left(T-2\right)}}=W^{\left(T-1\right)}\left[\frac{\partial J}{\partial h^{\left(T-1\right)}}\odot g'\left(a^{\left(T-1\right)}\right)\right] 
+\end{align*}
+
+Note that since our network only has two layers, $h^{\left(T-2\right)}=x$.
+
+\textit{Q5.1.1}
+
+\begin{align*}
+J\left(h^{\left(T\right)}\right)&={\left| \left| y-h^{\left(T\right)}\right| \right| }_{2}^{2} \\
+\frac{\partial J}{\partial h^{\left(T\right)}}&=-2\left(y-h^{\left(T\right)}\right) 
+\end{align*}
+
+1
+
+\textit{Q1.6}
+
+\begin{align*}
+e^{-x}&=\frac{1-\sigma \left(x\right)}{\sigma \left(x\right)}\Longrightarrow e^{-2x}=\frac{1-\sigma \left(2x\right)}{\sigma \left(2x\right)} \\
+\tanh \left(x\right)&=\frac{1-e^{-2x}}{1+e^{-2x}}=\frac{1-\frac{1-\sigma \left(2x\right)}{\sigma \left(2x\right)}}{1+\frac{1-\sigma \left(2x\right)}{\sigma \left(2x\right)}}=2\sigma \left(2x\right)-1 
+\end{align*}
+
+\textit{Q6}
+
+\url{https://www.sjsu.edu/faculty/guangliang.chen/Math253S20/lec5svd.pdf}
+
+\url{https://towardsdatascience.com/pca-and-svd-explained-with-numpy-5d13b0d2a4d8}
+
+\url{https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca}
+
+\textit{For square matrices, the spectral decomposition is}
+\begin{equation*}
+A={\sum }_{i=1}^{r}\lambda _{i}q_{i}{q}_{i}^{T}
+\end{equation*}
+\textit{We define a similar decomposition for non-square matrices, the SVD, as}
+\begin{equation*}
+X={\sum }_{i=1}^{r}\sigma _{i}u_{i}{v}_{i}^{T}
+\end{equation*}
+\textit{In matrix form,}
+\begin{equation*}
+X=U\Upsigma V^{T}
+\end{equation*}
+\textit{PCA is performed by taking the first K} \textit{terms of the sum of the covariance matrix to approximate the matrix X.}
+
+\textit{This can be done using the svds(X, K) function.}
+\begin{equation*}
+C=\frac{X^{T}X}{n-1}=V\frac{\Upsigma ^{2}}{n-1}V^{T}
+\end{equation*}
+\pagebreak
+Let’s test this on a neural network with one hidden layer using a sigmoid activation and output layer function.
+
+There are three layers, the input layer (l=0), the hidden layer (l=1) and the output layer (l=2).
+
+With zero-initialization, all weights $W$ and biases $b$ are 0.
+
+For forward propagation, 
+
+\begin{align*}
+{a}_{j}^{\left(1\right)}&=\sigma \left({\sum }_{i=1}^{m_{0}}{W}_{ij}^{\left(1\right)}x_{i}+{b}_{j}^{\left(1\right)}\right) \\
+\hat{y}_{k}&=\sigma \left({\sum }_{j=1}^{m_{1}}{W}_{jk}^{\left(2\right)}{a}_{j}^{\left(1\right)}+{b}_{k}^{\left(2\right)}\right) 
+\end{align*}
+
+The network outputs ${a}_{j}^{\left(1\right)}=0.5$ and $\hat{y}_{k}=0.5$ regardless of the input $x_{i}$.
+
+The gradients are
+
+\begin{align*}
+\frac{\partial L}{\partial {w}_{jk}^{\left(2\right)}}&=\delta _{k}{a}_{j}^{\left(1\right)},\frac{\partial L}{\partial {b}_{k}^{\left(2\right)}}=\delta _{k} \\
+\frac{\partial L}{\partial {w}_{ij}^{\left(1\right)}}&=\delta _{j}x_{i},\frac{\partial L}{\partial {b}_{j}^{\left(1\right)}}=\delta _{j} 
+\end{align*}
+
+where $\delta _{k}=\left(\hat{y}_{k}-y_{k}\right)\hat{y}_{k}\left(1-\hat{y}_{k}\right)$ and $\delta _{j}={a}_{j}^{\left(1\right)}\left(1-{a}_{j}^{\left(1\right)}\right){\sum }_{i=1}^{m_{2}}\delta _{k}{w}_{jk}^{\left(2\right)}$.
+
+We see that for our zero-initialized network, $\delta _{k}=\left(0.5-y_{k}\right)\left(0.5\right)\left(1-0.5\right)=0$ and the output layer weights are not updated.
+
+Furthermore, $\delta _{j}={a}_{j}^{\left(1\right)}\left(1-{a}_{j}^{\left(1\right)}\right){\sum }_{i=1}^{m_{2}}\delta _{k}{w}_{jk}^{\left(2\right)}=0\left(1-0\right){\sum }_{i=1}^{m_{2}}\left(0\right)\left(0\right)=0$ and the hidden layer weights are not updated.
+
+If we generalize this result to a network with any activation function, then
+
+\begin{align*}
+\delta _{k}&=\left(\hat{y}_{k}-y_{k}\right)f'\left({z}_{k}^{\left(2\right)}\right) \\
+\delta _{j}&=f'\left({z}_{j}^{\left(1\right)}\right){\sum }_{i=1}^{m_{2}}\delta _{k}{w}_{jk}^{\left(2\right)} 
+\end{align*}
+
+where ${z}_{j}^{\left(1\right)}={\sum }_{i=1}^{m_{0}}{W}_{ij}^{\left(1\right)}x_{i}+{b}_{j}^{\left(1\right)}$ and ${z}_{k}^{\left(2\right)}={\sum }_{j=1}^{m_{1}}{W}_{jk}^{\left(2\right)}{a}_{j}^{\left(1\right)}+{b}_{k}^{\left(2\right)}$ are the outputs before applying the activation function. We see these two are also 0.
+\end{document}

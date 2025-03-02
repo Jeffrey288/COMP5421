@@ -1,0 +1,68 @@
+\documentclass{article} % \documentclass{} is the first command in any LaTeX code.  It is used to define what kind of document you are creating such as an article or a book, and begins the document preamble
+\usepackage[left=1in, right=1in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath} % \usepackage is a command that allows you to add functionality to your LaTeX code
+\usepackage{subcaption}
+\usepackage{ifthen}
+\usepackage{xparse}
+
+\graphicspath{{../results/}{../writeup/}} 
+\newcommand{\img}[3][0.3]{    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio=true,height=#1\textheight]{#2}
+        \caption{#3}
+    \end{figure}
+}
+% \newcommand{\subimg}[3][0.5]{    
+%     \begin{subfigure}{#1\textwidth}
+%         \centering
+%         \includegraphics[width=\linewidth,keepaspectratio=true]{#2}
+%         \ifthenelse{\equal{#3}{}}{}{\caption{#3}}
+%     \end{subfigure}
+% }
+\NewDocumentCommand{\subimg}{D<>{0.1}mO{}}{    
+    \begin{subfigure}{#1\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,keepaspectratio=true]{#2}
+        \ifthenelse{\equal{#3}{}}{}{\caption{#3}}
+    \end{subfigure}
+}
+
+
+\title{\large COMP5421 Computer Vision
+\\ \huge Homework Assignment 2
+\\ \huge Feature Descriptors, Homographies and RANSAC} 
+\author{Hartanto Kwee Jeffrey\\
+    \normalsize jhk@connect.ust.hk | SID: 20851871} % Sets authors name
+\date{}
+
+% The preamble ends with the command \begin{document}
+\begin{document} % All begin commands must be paired with an end command somewhere
+    \maketitle % creates title using information in preamble (title, author, date)
+    
+    \section[1]{Keypoint Detector} % creates a section
+    \subsection*{Q1.5}
+    
+    Image \verb*|model_chickenbroth.jpg| with the detected keypoints:
+
+    \img{task1,5.png}
+    
+    \section[2]{BRIEF Descriptor}
+    \subsection*{Q2.4}
+
+Results of BRIEF descriptor matching for the following sets of images:
+    \begin{figure}[h]
+        \subimg{task2,4_soup.png}{}
+    \end{figure}
+
+% 1. Left: `model_chickenbroth.jpg`, right: `chickenbroth_01.jpg`
+% ![](task2,4_soup.png)  
+% 2. Left: `incline_L.png`, right: `incline_R.png`
+% ![](task2,4_incline.png)  
+% 3. Left: `pf_scan_scaled.jpg`, right: `pf_floor.jpg`
+% ![](task2,4_book.png)  
+
+\textbf{Discussion}: The computer vision book has the worst performance, with over half of the features wrongly mapped to other books. The image of the city also performs badly, with similar features on unrelated small buidlings mapped together. In contrast, the can of chicken broth performs quite well, with most keypoints correctly mapped.  
+    
+\end{document} % This is the end of the document

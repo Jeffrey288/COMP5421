@@ -1,0 +1,117 @@
+% docx2tex 1.8 --- ``Who let the docx out?'' 
+% 
+% docx2tex is Open Source and  
+% you can download it on GitHub: 
+% https://github.com/transpect/docx2tex 
+%  
+\documentclass{scrbook} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{hyperref} 
+\usepackage{multirow} 
+\usepackage{tabularx} 
+\usepackage{color} 
+\usepackage{textcomp} 
+\usepackage{tipa}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsfonts} 
+\usepackage{amsxtra} 
+\usepackage{wasysym} 
+\usepackage{isomath} 
+\usepackage{mathtools} 
+\usepackage{txfonts} 
+\usepackage{upgreek} 
+\usepackage{enumerate} 
+\usepackage{tensor} 
+\usepackage{pifont} 
+\usepackage{ulem} 
+\usepackage{xfrac} 
+\usepackage{arydshln} 
+\usepackage[english]{babel}
+
+\begin{document}
+Planar Homography
+
+\textbf{Part (a)}
+
+For a point $w$ on the common plane, $\tilde{u}$ and $\tilde{x}$ are the 2D projected point on the first and second camera respectively. The two are related by a relationship
+\begin{equation*}
+\lambda \tilde{x}=H\tilde{u}
+\end{equation*}
+For $N$ pairs of such points, we have
+
+\begin{align*}
+\lambda _{n}\widetilde{x_{n}}&=H\widetilde{u_{n}} \\
+\lambda _{n}\left[\begin{array}{c}
+\widetilde{x_{xn}}\\
+x_{yn}\\
+1
+\end{array}\right]&=\begin{bmatrix}
+H_{11} & H_{12} & H_{13}\\
+H_{21} & H_{22} & H_{23}\\
+H_{31} & H_{32} & H_{33}
+\end{bmatrix}\left[\begin{array}{c}
+\widetilde{u_{xn}}\\
+\widetilde{u_{yn}}\\
+1
+\end{array}\right]=\left[\begin{array}{c}
+-{h}_{1}^{T}-\\
+-{h}_{2}^{T}-\\
+-{h}_{3}^{T}-
+\end{array}\right]\widetilde{u_{n}} 
+\end{align*}
+
+We let $h=\left[\begin{array}{cccc}
+H_{11} & H_{12} & \ldots & H_{33}
+\end{array}\right]^{T}$. Then for one set of points,
+
+\begin{align*}
+\lambda _{n}\widetilde{x_{xn}}&={h}_{1}^{T}\widetilde{u_{n}} \\
+\lambda _{n}\widetilde{x_{yn}}&={h}_{2}^{T}\widetilde{u_{n}} \\
+\lambda _{n}&={h}_{3}^{T}\widetilde{u_{n}} 
+\end{align*}
+
+which can be reduced to
+
+\begin{align*}
+{h}_{1}^{T}\widetilde{u_{n}}-\left({h}_{3}^{T}\widetilde{u_{n}}\right)\widetilde{x_{xn}}&=0 \\
+{h}_{2}^{T}\widetilde{u_{n}}-\left({h}_{3}^{T}\widetilde{u_{n}}\right)\widetilde{x_{yn}}&=0 
+\end{align*}
+
+In matrix form,
+\begin{equation*}
+A_{n}=\left[\begin{array}{ccc}
+\widetilde{u_{n}}^{T} & 0 & -\widetilde{x_{xn}}\widetilde{u_{n}}^{T}\\
+0 & \widetilde{u_{n}}^{T} & -\widetilde{x_{yn}}\widetilde{u_{n}}^{T}
+\end{array}\right]\left[\begin{array}{c}
+h_{1}\\
+h_{2}\\
+h_{3}
+\end{array}\right]
+\end{equation*}
+Repeat this $N$ times to get
+\begin{equation*}
+A=\left[\begin{array}{c}
+A_{1}\\
+A_{2}\\
+\vdots \\
+A_{N}
+\end{array}\right]
+\end{equation*}
+Part (b)
+
+There are 9 elements
+
+\textbf{Part (c) NOT YET DONE}
+
+$H$ is a matrix that encodes a projective transformation. Hence, it has 7 degrees of freedom.
+
+Each point correspondence gives two linear equations (derived above).
+
+Part (d)
+
+1. Compute the SVD of $A$ to get $U\Upsigma V^{T}$.
+
+2. The solutions for $h$ is given by the rightmost column of the matrix $V$.
+\end{document}
